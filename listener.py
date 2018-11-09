@@ -76,6 +76,16 @@ class MicrophoneStream(object):
                     break
 
             yield b''.join(data)
+def email():
+    print("entered email")
+    import smtplib
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login("emquantum64@gmail.com", "raspberrypi")
+    msg = "Hey Vincent.  Call me ASAP -mom"
+    print(msg)
+    server.sendmail("emquantum64@gmail.com", "7034777327@", msg) #vincent number email: 7035894742@tmomail.net
+    server.quit()
 
 
 def listen_print_loop(responses, awko):
@@ -138,6 +148,8 @@ def listen_print_loop(responses, awko):
             print("awko count: ", awko)
             if awko == 3:
                 print("bail me out now")
+                email()
+                awko += 1
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r'\b(exit|quit)\b', transcript, re.I):
@@ -158,8 +170,6 @@ def listen_print_loop(responses, awko):
                 word,
                 start_time.seconds + start_time.nanos * 1e-9,
                 end_time.seconds + end_time.nanos * 1e-9))'''
-
-
 def main():
     # See http://g.co/cloud/speech/docs/languages
     # for a list of supported languages.
