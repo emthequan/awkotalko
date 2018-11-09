@@ -1,7 +1,8 @@
+#!/usr/bin/python
 from __future__ import division
 import re
 import sys
-
+import random
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
@@ -76,17 +77,26 @@ class MicrophoneStream(object):
                     break
 
             yield b''.join(data)
+suggestions = []
+def readTextFile():
+    count = 1
+    file = open("suggestions.txt", "r")
+    for i in file:
+        if count % 2 == 1:
+            suggestions.append(i)
+            count += 1
+
 def email():
     print("entered email")
     import smtplib
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     server.login("emquantum64@gmail.com", "raspberrypi")
-    msg = "Hey Vincent.  Call me ASAP -mom"
+    rand = random.randint(1, len(suggestions))
+    msg = "Call me ASAP. -Dad"
     print(msg)
-    server.sendmail("emquantum64@gmail.com", "7034777327@", msg) #vincent number email: 7035894742@tmomail.net
+    server.sendmail("emquantum64@gmail.com", "7034777327@txt.att.net", msg) #vincent number email: 7035894742@tmomail.net
     server.quit()
-
 
 def listen_print_loop(responses, awko):
     """Iterates through server responses and prints them.
@@ -171,6 +181,7 @@ def listen_print_loop(responses, awko):
                 start_time.seconds + start_time.nanos * 1e-9,
                 end_time.seconds + end_time.nanos * 1e-9))'''
 def main():
+    readTextFile()
     # See http://g.co/cloud/speech/docs/languages
     # for a list of supported languages.
     language_code = 'en-US'  # a BCP-47 language tag
