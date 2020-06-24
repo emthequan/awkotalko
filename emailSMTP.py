@@ -3,9 +3,9 @@
 import smtplib
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
-server.login("emquantum64@gmail.com", "raspberrypi")
+server.login("email", "password") #need to fill in password with actual password
 msg = "gregorian chant"
-server.sendmail("emquantum64@gmail.com", "emthequan@gmail.com", msg)
+server.sendmail("email", "email", msg)
 server.quit()
 
 
